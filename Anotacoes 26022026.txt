@@ -112,7 +112,7 @@ Um Relacionamento é uma associação entre 2 TABLES. EX: Cliente -> Conta / inf
 Diagrama de E/R -> Entidade Relacionamento - Ferramenta de Modelagem Conceitual, amplamente utilizada. Padrão para modelagem de fácil compreensão. 
 Entidade: São os componentes físicos e abstratos do mundo real que armazenam os dados. EX: Cliente, conta, banco, etc.
 Atributo: São as propriedades de uma entidade. Não tem vida própria ou independente. Caracteriza a entidade. EX: Nome, saldo, NRO da Conta.
-Ocorrência: Conjunto de atributos de uma entidade (uma linha dentro da entidade) que carateriza. EX: José da Silva (Nome e Sobrenome).
+Ocorrência: Conjunto de atributos de uma entidade (uma linha dentro da entidade) que caracteriza. EX: José da Silva (Nome e Sobrenome).
 
 Identificador ou Atributo -> Determinante: Atributo ou coleção de atributos que determina de modo único uma ocorrência da entidade.
 EX: ID do cliente.
@@ -129,6 +129,58 @@ EX: Publicações ------< Publicação (autor) >---- Autor
 
 
 	DFD: Diagrama de Fluxo dos Dados
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Aula 05 - 12/03/2026
+
+Identificação de Entidades -> Segundo Keller (1990): Ao criar uma entidade, deve-se atribuir um nome representativo e de escolher um atributo que identifique cada ocorrência da entidade.
+Não há entidade se não houver um atributo cujo valor jamais seja repetido.
+- Geralmente representa objetos polpáveis.
+- Algumas coisas palpáveis não são entidades, mas documentos que reúnem informações sobre outras entidades.
+- Apenas no caso de entidade fraca, não há por que se preocupar com um ID, pois as pesquisas futuras serão feitas com base na sua entidade forte.
+- Uma relação de generalização - especialização evidência entidades cujas ocorrências podem ser diferenciadas em alguns atributos, sugerindo a existência da entidade geral
+e das especializadas
+
+Atributos -> Propriedade da entidade que precisa ser armazenada. Pode conter apenas um valor atômico, indivisível. É errado definir como atributo um valor estruturado, como endereço:
+Rua, bairro, cidade etc.
+- O nome de cada atributo deve ser sempre no singular.
+- Se ele representa a ocorrência única da entidade deve ser precedido por #.
+- Se seu valor é obrigatório, deve ser informado para cada uma das ocorrências da entidade deve ser precedido por *
+
+	BANCO DE DADOS
+	# NR_BANCO
+	* NM_BANCO
+	  ID_BOLETO
+
+Classificação - Atomicidade
+- Simples: Não tem outros atributos aninhados. Ex: Nome
+- Composto: Possui atributos aninhados. Ex: Endereço (Rua, Bairro, Etc)
+
+Ocorrências
+- Monovalorado: Único valor para cada instância. Ex: Nome
+- Multivalorado: Mais de um valor para cada entidade. Ex: Dependentes (Filhos, telefones, endereços, etc.)
+- Derivado: Calculado a partir de outro atributo. Ex: Idade.
+
+Participação em chaves
+- Identificação: Desempenham papel de identificação em relacionamentos, PK's e chaves secundárias (índices).
+- Determinante ou chave: Identifica unicamente cada ocorrência de uma entidade. Ex: COD_FUNCIONARIO
+
+Conexão ou relacionamento: Chaves estrangeiras
+- Meio: Atributos internos específicos do domínio da aplicação.
+- Interno: Salário
+- Externo: Valor do UFIR
+
+Origem
+- Natural: Nome
+- Artificial: Codigo_Cliente 
+
+Privacidade
+- Restrito: Senha
+- Público: Nome
+
+Derivação
+- Primitivo: Nome
+- Derivado: Idade
 
 	
 
