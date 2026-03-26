@@ -182,6 +182,63 @@ Derivação
 - Primitivo: Nome
 - Derivado: Idade
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Aula 06 26/03/2026
+
+Relacionamentos Entre Entidades	-> São associações entre entidades de dados. Estão intimamente ligados e representam os caminhos de navegação ou rotas de acesso do modelo de dados. 
+
+Grau de Cardinalidade:
+-Grau muitos: ---<
+-Grau um: ----
+
+Obrigatoriedade:
+-Obrigatório: ----
+-Opcional: ....
+
+Sintaxe: Cada entidade1 {pode ou deve} 
+Nome_Do_Relacionamento {um ou mais / um e somente um}
+entidade2
+
+Ex:
+[Produto]estar------<possuir[Item Nota]
+
+O relacionamento deve sempre ser lido em todas as direções:
+-Cada produto pode estar em um ou mais Item_Nota
+-Cada item nota deve possuir um e somente um Produto
+
+O relacionamento é composto pela combinação das propriedades de cardinalidade e um verbo que represente a ligação. Estes verbos compõem o nome do relacionamento.
+
+
+Cardinalidade -> 1:1 (um pra um): Normalmente aplicado para registros com informações nulas para determinados campos da entidade. 
+EX: Um funcionário pode ser um e somente um efetivo e um efetivo deve ser um e somente um funcionário.
+[funcionario]--------------[efetivo    ]
+[#co_func   ]              [#cod.func  ]
+[fone       ]              [DT.contrato]
+[vl.salario ]              
+
+
+1:N (um para muitos): Relacionamento mais comum e utilizado. Representa a hierarquia entre as entidades.
+EX: Um departamento pode gerenciar vários setores, mas um setor deve estar subordinado a somente um Departamento.
+
+              gerenciar
+[Departamento]--------------------------< [Setor   ]
+|#CD.DPTO    |                      estar |CD.Setor|
+                              subordinado |CD.DEPTO|
+
+
+M:N (muitos pra muitos): Utilizado quando as informações formam ciclo, sem hierarquia.
+EX: Um estudante pode participar de vários projetos e um projeto pode ter vários estudantes.
+[Projeto]>------------------------------< [Estudante]
+
+
+Auto Relacionamento
+-Reflexivo ou recursivo: Quando uma entidade se relaciona com ela mesma.
+EX: Uma entidade funcionário pode haver uma informação supervisor que deve ser um funcionário previamente cadastrado. Estes relacionamentos devem ser obrigatoriamente opcional
+      [funcionario  ]
+   -- [#ID          ]
+   |  [Nome         ]
+   -- [ID.supervisor]
+
 	
 
 
