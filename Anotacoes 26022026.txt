@@ -239,11 +239,17 @@ EX: Uma entidade funcionário pode haver uma informação supervisor que deve se
    |  [Nome         ]
    -- [ID.supervisor]
 
-	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Aula 07 16/04/2026
 
+Conceito fundamental: Correção, consistência e segurança dos dados. Estão associadas aos conceitos de chave de acesso. Garantem o acesso individualizado a todas as ocorrências de uma tabela.
+Garantem que os relacionamentos estejam válidos e condizentes com a realidade.
 
-
-
+PK: Chave-Primária. Faz com que a tabela seja ordenada por ela automaticamente e não permite duplicidade em seu valor. Mantém a unicidade dos dados. Deve-se eleger um campo que nunca se repete.
+UK: Chave-Única. Além da PK uma tabela pode possuir quantas UK's forem necessárias. Garante que não serão inseridos dados duplicados em colunas que não são PK.
+SK: Chaves-Secundárias. Chave auxiliar de acesso a uma tabela. Também possuem indíces relacionados utilizados em campos onde se efetuam muitas pesquisas ou acessos. Não precisam necessariamente
+ser UK's.
+FK: Chaves-Estrangeiras. Permite acesso e validação de outras tabelas. Deve ser compatível em tipo e tamanho com sua PK correspondente na tabela de origem.
 
 
 
