@@ -251,8 +251,31 @@ SK: Chaves-Secundárias. Chave auxiliar de acesso a uma tabela. Também possuem 
 ser UK's.
 FK: Chaves-Estrangeiras. Permite acesso e validação de outras tabelas. Deve ser compatível em tipo e tamanho com sua PK correspondente na tabela de origem.
 
+Normalização: Organizar as taelas de modo que sera estrutura seja simples, relacional e estável. O objetivo é evitar perdas e a repetição de informação, apresentando e armazenando os dados
+adequadamente. Melhora a estrutura dos dados e evita problemas de redundância e anomalias de atualização. É um processo sistemático de aplicação de regras que vão da 1º FN a 5º FN. Mas na
+grande maioria dos casos a aplicação da 3ª FN já é suficiente.
 
+1ª FN: Exige que uma tabela não tenha aninhamentos (atributos repetitivos).
+Nivelamente: A PK da tabela é formada pelas PK's de cada tabela adjacente. Caso existam atributos multi valorados estes devem se tornar componentes da PK. Se existir aninhamento provavelmente
+este 1 FN não é o estado final do Schema. Uma tabela está na 1ª FN se nenhum de seus atributos possui domínio multivalorado ou seja, devemos elminar itens repetitivos.
+EX: [Nota.Fiscal]
+	|NR.Nota    |
+	|NM.Cliente |
+	|NM.Vendedor|
+	|Produto1   |---\
+	|Produto2   |--------------------{ANINHAMENTO}
+	|ProdutoN   |----/
 
+    [Nota.Fiscal]		  [Item.Nota   ]
+	|NR.Nota    |		  |NR.Nota     |
+	|NM.Cliente |1-------N|Cod.Produto |   {VERSÃO CORRETA SEM ANINHAMENTO}
+	|NM.Vendedor|		  |Desc.Produto|
+						  |Valor       |
+
+2ª FN: Exige o entendimento do conceito de (DF) -> Dependência Funcional.
+Existe DF em uma tabela que sempre tem um conjunto de um ou mais atributos determinando o valor de outro conjunto de um ou mais atributos. É possível perceber isto analisando dados de arquivos
+e relatórios de uma organização. Uma tabela esta na segunda 2ª FN se e somente se estiver na 1ª FN e todo atributo nao chave depende funcionalmente de toda PK e não apenas de parte dela. Deve
+resistir dependência funcional da PK por completo.
 
 
 
