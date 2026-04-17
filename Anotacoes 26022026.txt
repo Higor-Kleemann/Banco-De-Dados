@@ -277,6 +277,9 @@ Existe DF em uma tabela que sempre tem um conjunto de um ou mais atributos deter
 e relatórios de uma organização. Uma tabela esta na segunda 2ª FN se e somente se estiver na 1ª FN e todo atributo nao chave depende funcionalmente de toda PK e não apenas de parte dela. Deve
 resistir dependência funcional da PK por completo.
 
+Cada atributo não chave deve ser analisado e se identificado DF de parte da PK, gera-se uma tabela que tenha o atributo não-chave que parte da PK (que agora é uma PK completa). A 2ª FN é o caso 
+da tabela de produtos onde o atributo determinante mais os outros que dependem apenas dele (nome) foram movidos de Nota e depois de Item.Nota para Produto compondo a PK composta em Item.Nota 
+
 
 
 
