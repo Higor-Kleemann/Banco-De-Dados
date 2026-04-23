@@ -17,13 +17,21 @@ CREATE TABLE PERSON(
 	PHONE VARCHAR(20) NOT NULL,
 	RG VARCHAR(20) NOT NULL UNIQUE,
 	CPF VARCHAR(11) NOT NULL UNIQUE,
-	SEX VARCHAR (6) NOT NULL,
+	SEX VARCHAR (10) NOT NULL,
 	CIVIL_STATUS VARCHAR(20) NOT NULL,
 	BIRTH_DATE DATE NOT NULL,
 	ID_ADDRESS INT NOT NULL,
 	CONSTRAINT FK_PERSON_ADDRESS
 		FOREIGN KEY(ID_ADDRESS)
 		REFERENCES ADDRESS(ID_ADDRESS)
+);
+
+CREATE TABLE PATIENT(
+	ID_PATIENT INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	ID_PERSON INT NOT NULL,
+	CONSTRAINT FK_PATIENT_PERSON
+		FOREIGN KEY(ID_PERSON)
+		REFERENCES PERSON(ID)
 );
 
 CREATE TABLE EMERGENCY_CONTACT(
@@ -34,7 +42,7 @@ CREATE TABLE EMERGENCY_CONTACT(
 	ID_PERSON INT NOT NULL,
 	CONSTRAINT FK_EMERGENCY_CONTACT_ID_PERSON
 		FOREIGN KEY(ID_PERSON)
-    	REFERENCES PERSON(ID)
+		REFERENCES PERSON(ID)
 );
 
 CREATE TABLE DOCTOR(
@@ -43,7 +51,7 @@ CREATE TABLE DOCTOR(
 	ID_PERSON INT NOT NULL,
 	CONSTRAINT FK_DOCTOR_PERSON
 		FOREIGN KEY(ID_PERSON)
-    	REFERENCES PERSON(ID)
+		REFERENCES PERSON(ID)
 );
 
 CREATE TABLE CONSULTATION(
@@ -54,82 +62,76 @@ CREATE TABLE CONSULTATION(
 	ID_PATIENT INT NOT NULL,
 	CONSTRAINT FK_CONSULTATION_DOCTOR
 		FOREIGN KEY(ID_DOCTOR)
-    	REFERENCES DOCTOR(ID_DOCTOR),
+		REFERENCES DOCTOR(ID_DOCTOR),
 	CONSTRAINT FK_CONSULTATION_PATIENT
 		FOREIGN KEY(ID_PATIENT)
-    	REFERENCES PERSON(ID)
+		REFERENCES PATIENT(ID_PATIENT)
 );
 
+USE HOSPITAL;
+
 INSERT INTO ADDRESS (NEIGHBORHOOD, STREET, CEP, HOUSE_NUMBER) VALUES
-('Centro', 'Rua das Flores', '01001000', '123'),
-('Vila Nova', 'Avenida Brasil', '02020020', '456'),
-('Jardins', 'Rua Augusta', '01313013', '789'),
-('Moema', 'Rua Gaivota', '04040040', '101'),
-('Itaim Bibi', 'Rua Tabapuã', '04545045', '202'),
-('Pinheiros', 'Rua Oscar Freire', '05454054', '303'),
-('Liberdade', 'Rua da Glória', '01515015', '404'),
-('Vila Mariana', 'Rua Vergueiro', '04141041', '505'),
-('Tatuapé', 'Rua Tuiuti', '03030030', '606'),
-('Penha', 'Rua Guarulhos', '03636036', '707'),
-('Santo Amaro', 'Rua Padre João Manuel', '04747047', '808'),
-('Brooklin', 'Rua Arizona', '04568045', '909');
+('Centro', 'Rua A', '89600000', '10'),
+('Centro', 'Rua B', '89600001', '20'),
+('Bela Vista', 'Rua C', '89600002', '30'),
+('Bela Vista', 'Rua D', '89600003', '40'),
+('Jardim', 'Rua E', '89600004', '50'),
+('Jardim', 'Rua F', '89600005', '60'),
+('Industrial', 'Rua G', '89600006', '70'),
+('Industrial', 'Rua H', '89600007', '80'),
+('São José', 'Rua I', '89600008', '90'),
+('São José', 'Rua J', '89600009', '100'),
+('Centro', 'Rua K', '89600010', '110'),
+('Centro', 'Rua L', '89600011', '120'),
+('Bela Vista', 'Rua M', '89600012', '130'),
+('Jardim', 'Rua N', '89600013', '140'),
+('Industrial', 'Rua O', '89600014', '150');
 
-INSERT INTO PERSON (FIRST_NAME, LAST_NAME, PHONE, RG, CPF, SEX, CIVIL_STATUS, BIRTH_DATE, ID_ADDRESS) VALUES
-('Maria', 'Silva', '(11)99999-1111', '12345678', '12345678901', 'F', 'Solteira', '1990-05-15', 1),
-('João', 'Santos', '(11)99999-2222', '87654321', '98765432100', 'M', 'Casado', '1985-08-20', 2),
-('Ana', 'Oliveira', '(11)99999-3333', '11223344', '11223344556', 'F', 'Solteira', '1995-03-10', 3),
-('Pedro', 'Costa', '(11)99999-4444', '44332211', '44332211000', 'M', 'Divorciado', '1978-12-05', 4),
-('Carla', 'Pereira', '(11)99999-5555', '55667788', '55667788990', 'F', 'Casada', '1988-07-22', 5),
-('Lucas', 'Ferreira', '(11)99999-6666', '99887766', '99887766555', 'M', 'Solteiro', '2000-01-30', 6),
-('Juliana', 'Lima', '(11)99999-7777', '33445566', '33445566778', 'F', 'Viúva', '1965-11-12', 7),
-('Rafael', 'Gomes', '(11)99999-8888', '66778899', '66778899000', 'M', 'Casado', '1992-09-18', 8),
-('Fernanda', 'Almeida', '(11)99999-9999', '88990011', '88990011223', 'F', 'Solteira', '1993-04-25', 9),
-('Thiago', 'Rocha', '(11)99998-0000', '00112233', '00112233444', 'M', 'Noivo', '1987-06-14', 10),
+-- PESSOAS (15: 10 pacientes + 5 médicos)
+INSERT INTO PERSON 
+(FIRST_NAME, LAST_NAME, PHONE, RG, CPF, SEX, CIVIL_STATUS, BIRTH_DATE, ID_ADDRESS) 
+VALUES
+-- Pacientes
+('João', 'Silva', '49911111111', 'RG1', '11111111111', 'M', 'Solteiro', '1990-01-01', 1),
+('Maria', 'Oliveira', '49922222222', 'RG2', '22222222222', 'F', 'Casado', '1985-02-02', 2),
+('Carlos', 'Souza', '49933333333', 'RG3', '33333333333', 'M', 'Solteiro', '1992-03-03', 3),
+('Ana', 'Pereira', '49944444444', 'RG4', '44444444444', 'F', 'Casado', '1988-04-04', 4),
+('Lucas', 'Costa', '49955555555', 'RG5', '55555555555', 'M', 'Solteiro', '1995-05-05', 5),
+('Fernanda', 'Almeida', '49966666666', 'RG6', '66666666666', 'F', 'Casado', '1991-06-06', 6),
+('Bruno', 'Rocha', '49977777777', 'RG7', '77777777777', 'M', 'Solteiro', '1989-07-07', 7),
+('Juliana', 'Martins', '49988888888', 'RG8', '88888888888', 'F', 'Casado', '1993-08-08', 8),
+('Rafael', 'Barbosa', '49999999999', 'RG9', '99999999999', 'M', 'Solteiro', '1994-09-09', 9),
+('Patricia', 'Lima', '49910101010', 'RG10', '10101010101', 'F', 'Casado', '1996-10-10', 10),
 
-('Dr. Roberto', 'Carvalho', '(11)98888-1111', '11111111', '11111111111', 'M', 'Casado', '1975-02-28', 11),
-('Dra. Patricia', 'Souza', '(11)98888-2222', '22222222', '22222222222', 'F', 'Solteira', '1980-10-15', 12),
-('Dr. Marcos', 'Vieira', '(11)98888-3333', '33333333', '33333333333', 'M', 'Casado', '1972-07-08', 1),
-('Dra. Camila', 'Monteiro', '(11)98888-4444', '44444444', '44444444444', 'F', 'Divorciada', '1983-12-03', 2),
-('Dr. Eduardo', 'Barbosa', '(11)98888-5555', '55555555', '55555555555', 'M', 'Casado', '1978-05-20', 3);
+-- Médicos
+('Dr. Paulo', 'Mendes', '49920202020', 'RG11', '20202020202', 'M', 'Casado', '1980-01-01', 11),
+('Dra. Carla', 'Ferreira', '49930303030', 'RG12', '30303030303', 'F', 'Casado', '1982-02-02', 12),
+('Dr. Ricardo', 'Teixeira', '49940404040', 'RG13', '40404040404', 'M', 'Solteiro', '1978-03-03', 13),
+('Dra. Beatriz', 'Gomes', '49950505050', 'RG14', '50505050505', 'F', 'Casado', '1985-04-04', 14),
+('Dr. Eduardo', 'Ribeiro', '49960606060', 'RG15', '60606060606', 'M', 'Solteiro', '1975-05-05', 15);
 
-INSERT INTO DOCTOR (CRM, ID_PERSON) VALUES
-('CRM-SP-123456', 11),
-('CRM-SP-789012', 12),
-('CRM-SP-345678', 13),
-('CRM-SP-901234', 14),
-('CRM-SP-567890', 15);
+-- PACIENTES (IDs 1–10 da PERSON)
+INSERT INTO PATIENT (ID_PERSON) 
+VALUES
+(1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
 
-INSERT INTO EMERGENCY_CONTACT (FIRST_NAME, LAST_NAME, PHONE, ID_PERSON) VALUES
-('José', 'Silva', '(11)98888-0001', 1),
-('Marta', 'Santos', '(11)98888-0002', 2),
-('Carlos', 'Oliveira', '(11)98888-0003', 3),
-('Rosa', 'Costa', '(11)98888-0004', 4),
-('Antônio', 'Pereira', '(11)98888-0005', 5),
-('Luiza', 'Ferreira', '(11)98888-0006', 6),
-('Paulo', 'Lima', '(11)98888-0007', 7),
-('Sônia', 'Gomes', '(11)98888-0008', 8),
-('Ricardo', 'Almeida', '(11)98888-0009', 9),
-('Vera', 'Rocha', '(11)98888-0010', 10),
-('Helena', 'Carvalho', '(11)98888-0011', 11),
-('Miguel', 'Souza', '(11)98888-0012', 12);
+-- MÉDICOS (IDs 11–15 da PERSON)
+INSERT INTO DOCTOR (CRM, ID_PERSON) 
+VALUES
+('CRM1001', 11),
+('CRM1002', 12),
+('CRM1003', 13),
+('CRM1004', 14),
+('CRM1005', 15);
 
--- INSERÇÃO EM CONSULTATION (15 registros)
-INSERT INTO CONSULTATION (CONSULTATION_DATE, DIAGNOSIS, ID_DOCTOR, ID_PATIENT) VALUES
-('2024-01-15 09:00:00', 'Gripe comum', 1, 1),
-('2024-01-16 14:30:00', 'Hipertensão arterial', 2, 2),
-('2024-01-17 10:15:00', 'Gastrite crônica', 3, 3),
-('2024-01-18 16:45:00', 'Dor lombar', 4, 4),
-('2024-01-19 11:20:00', 'Alergia cutânea', 5, 5),
-('2024-01-20 15:00:00', 'Resfriado', 1, 6),
-('2024-01-21 09:30:00', 'Diabetes tipo 2', 2, 7),
-('2024-01-22 13:45:00', 'Asma brônquica', 3, 8),
-('2024-01-23 17:15:00', 'Conjuntivite', 4, 9),
-('2024-01-24 10:00:00', 'Rinite alérgica', 5, 10),
-('2024-01-25 14:20:00', 'Sinusite', 1, 1),
-('2024-01-26 11:45:00', 'Artrite reumatoide', 2, 2),
-('2024-01-27 16:10:00', 'Refluxo gastroesofágico', 3, 3),
-('2024-01-28 09:50:00', 'Infecção urinária', 4, 4),
-('2024-01-29 15:30:00', 'Eczema', 5, 5);
+-- CONSULTAS
+INSERT INTO CONSULTATION (CONSULTATION_DATE, DIAGNOSIS, ID_DOCTOR, ID_PATIENT) 
+VALUES
+('2026-01-10 10:00:00', 'Gripe', 1, 1),
+('2026-01-11 11:00:00', 'Dor de cabeça', 2, 2),
+('2026-01-12 12:00:00', 'Febre', 3, 3),
+('2026-01-13 13:00:00', 'Alergia', 4, 4),
+('2026-01-14 14:00:00', 'Consulta rotina', 5, 5);
 
-SELECT * FROM CONSULTATION;
-SELECT * FROM PERSON;
+select * from consultation;
+select * from person;
