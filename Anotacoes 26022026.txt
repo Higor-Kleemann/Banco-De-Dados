@@ -280,11 +280,32 @@ resistir dependência funcional da PK por completo.
 Cada atributo não chave deve ser analisado e se identificado DF de parte da PK, gera-se uma tabela que tenha o atributo não-chave que parte da PK (que agora é uma PK completa). A 2ª FN é o caso 
 da tabela de produtos onde o atributo determinante mais os outros que dependem apenas dele (nome) foram movidos de Nota e depois de Item.Nota para Produto compondo a PK composta em Item.Nota 
 
+3ª FN: Cada tabela esta na 3FN se e somente se todo atributo não-chave depende funcional e diretamente da PK, e não de um conjunto de um ou mais atributos não-chave. Desta forma todo atributo não chave deve ser analisado em relação a outros atributos não chave. Apenas tabelas com mais de um atributo não chave são consideradas, para efeito de analise da 3FN. Caso perceba-se uma DF (Dependência funcional) indireta, uma nova tabela é gerada, onde os atributos não-chave que determinam outros tornam-se PK e os atributos com DF indireta dele migram para ela como atributos não-chave. Na tabela antiga os atributos determinantes tornam-se FK's. Desta forma, uma tabela esta na 3FN quando esta na 2FN e não há dependência funcional transitiva entre seus atributos. O objetivo é separar subconjuntos incertos em um super-conjunto e evitar redundância nas informações. Além da repetição dos dados, a possibilidade da deterioração da qualidade das informações amenta muito.
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Aula - 28/05/2026
+View/Visões
+É uma tabela lógica que não ocupa espaço/lugar no banco de dados, pois seus dados não estão fisicamente armazenados sob ela, e pode ser composta por colunas e agrupamentos de uma ou mais tabelas.
+Ou seja, uma visão é resultado de uma consulta (query). De maneira geral em uma View é permitido selecionar, atualizar, excluir e incluir dados. No entanto, Views que contenham Join, Group by,
+Distinct, aliases (para colunas) e expressões somente permitem seleções. 
 
+Comando: 
+CREATE VIEW NOTA_CLIENTE [NOME.COLUNA[NOME.COLUNA]] AS SELECT ...
 
+EXEMPLO: 
+CREATE VIEW NOTA.CLIENTE AS SELECT N.NR_NOTA, C.NM_CLIENTE AS NOME,  
+	N.DT_EMISSAO AS EMISSAO,
+SUM(I.VL_UNITARIO * I.QT_PRODUTO) AS TOTAL,
+FROM CLIENTE AS C, NOTA_FISCAL AS N,
+	ITEM_NOTA_FISCAL AS I
+WHERE C.CD_CLIENTE = N.CD_CLIENTE
+AND N.NR_NOTA = I.NR_NOTA
+GROUP BY N.NR_NOTA, C.NOME_CLIENTE, N.DATA_EMISSAO
 
+Como a estrutura de uma View não pode ser alterada, para modificar uma View ela deve ser excluída e recriada.
 
+Comando:
+DROP VIEW NOME_VIEW
 
 
 	
